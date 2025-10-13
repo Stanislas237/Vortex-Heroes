@@ -211,7 +211,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 1
-  far clip plane: 500
+  far clip plane: 450
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -479,8 +479,8 @@ MonoBehaviour:
   - {fileID: 1822345149752838, guid: 45b62242ff99b0a48a47f713cd6d1687, type: 3}
   - {fileID: 1040074329139878, guid: fa8aadfb07ca2034188c69c6f2ab4624, type: 3}
   - {fileID: 1846397802687310, guid: 8c22678d7aa562145804b6f0af7e603a, type: 3}
-  spawnDistance: 200
-  spawnRangeX: {x: -25, y: 25}
+  spawnDistance: 500
+  spawnRangeX: {x: -15, y: 15}
   spawnRangeY: {x: -2, y: 2}
   spawnInterval: {x: 1.5, y: 3.5}
   scaleRange: {x: 2, y: 4}
@@ -11671,7 +11671,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 8
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &6672436219827739103
 MonoBehaviour:
@@ -11685,9 +11685,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5f7bd774b46f4d4787103cf8205fe01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockbackForce: 50
+  knockbackForce: 100
   destabilizeDuration: 1.5
-  spinIntensity: 80
+  restabilizeDuration: 0.5
+  spinIntensity: 200
 --- !u!1 &7138597496551036685
 GameObject:
   m_ObjectHideFlags: 0

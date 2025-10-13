@@ -7,6 +7,7 @@ public class ShipCollisionHandler : MonoBehaviour
     [Header("Collision Reaction")]
     public float knockbackForce = 50f;
     public float destabilizeDuration = 1.5f;
+    public float restabilizeDuration = .5f;
     public float spinIntensity = 80f;
 
     private Rigidbody rb;
@@ -45,6 +46,18 @@ public class ShipCollisionHandler : MonoBehaviour
             yield return null;
         }
 
+        while (timer < restabilizeDuration + destabilizeDuration)
+        {
+            // Petites rotations folles (perte de contrôle)
+            var t = (timer - destabilizeDuration) / restabilizeDuration;
+            rb.angularVelocity = Vector3.Lerp(rb.angularVelocity, Vector3.zero, t);
+            rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, Vector3.zero, t);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        rb.angularVelocity = Vector3.zero; // Stopper toute rotation
+        rb.linearVelocity = Vector3.zero; // Stopper tout mouvement
         isDestabilized = false;
     }
 

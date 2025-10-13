@@ -66,4 +66,12 @@ public class ShipController : MonoBehaviour
         Vector3 move = inputDir * moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + move);
     }
+
+    void LateUpdate()
+    {
+        // Forcer le vaisseau à rester sur son plan Z d’origine
+        Vector3 pos = transform.position;
+        pos.z = 0;
+        transform.position = pos;
+    }
 }

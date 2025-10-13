@@ -27,7 +27,7 @@ public class ObstacleMover : MonoBehaviour
         else
             Debug.LogWarning("No Rigidbody found on Obstacle. Using Transform for movement.");
 
-        Destroy(gameObject, 10f); // nettoyage après passage
+        Destroy(gameObject, 20f); // nettoyage après passage
     }
 
     void OnCollisionEnter(Collision collision)
