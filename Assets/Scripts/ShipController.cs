@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
 public class ShipController : MonoBehaviour
@@ -12,12 +13,31 @@ public class ShipController : MonoBehaviour
     public float wobbleAmplitude = 0.3f;   // Amplitude du bougé naturel
     public float wobbleFrequency = 2f;     // Fréquence du bougé
 
-    private Rigidbody rb;
-    private Vector3 inputDir;
-    private float wobbleTimer;
+    [Header("Oscillation (ship shake)")]
+    public Material skyboxMaterial; // Matériau du skybox
 
+    private PlayerInputActions playerInputActions;
+    private Vector3 inputDir;
+    private Rigidbody rb;
+    private float wobbleTimer;
+    
+    void Awake() => playerInputActions = new();
+    void OnEnable() => playerInputActions?.Enable();
+    void OnDisable() => playerInputActions?.Disable();
+    
     void Start()
     {
+        // --- Initialisation du skybox ---
+        if (skyboxMaterial != null)
+        {
+            RenderSettings.skybox = skyboxMaterial;
+            DynamicGI.UpdateEnvironment();
+        }
+
+        // --- Ajout d'événements à l'InputActions ---
+        playerInputActions.Player.Move.performed += ctx => inputDir = ctx.ReadValue<Vector2>();
+        playerInputActions.Player.Move.canceled += ctx => inputDir = Vector3.zero;
+
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
         rb.isKinematic = false;
@@ -25,14 +45,9 @@ public class ShipController : MonoBehaviour
 
     void Update()
     {
-        // --- INPUTS ---
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
-        inputDir = new Vector3(h, v, 0);
-
         // --- Inclinaison visuelle ---
-        float tiltX = -v * tiltAmount;
-        float tiltZ = -h * tiltAmount;
+        float tiltX = -inputDir.y * tiltAmount;
+        float tiltZ = -inputDir.x * tiltAmount;
 
         Quaternion targetRot = Quaternion.Euler(tiltX, 0, tiltZ);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * tiltSmooth);
