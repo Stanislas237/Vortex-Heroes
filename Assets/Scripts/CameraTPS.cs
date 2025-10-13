@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class CameraTPS : MonoBehaviour
 {
+    [HideInInspector]
+    public static CameraTPS Instance;
+
     [Header("Target")]
     public Transform target;
 
@@ -20,6 +23,11 @@ public class CameraTPS : MonoBehaviour
 
     void Start()
     {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+
         if (target && useInitialOffset)
             offset = transform.position - target.position;
     }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(ShipCollisionHandler))]
 public class ShipController : MonoBehaviour
 {
     [Header("Movement Settings")]
