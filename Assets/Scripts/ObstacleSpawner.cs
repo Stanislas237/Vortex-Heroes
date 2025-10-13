@@ -38,6 +38,7 @@ public class ObstacleSpawner : MonoBehaviour
             // Création de l’obstacle
             GameObject obj = Instantiate(prefab, spawnPos, Random.rotation);
             obj.transform.localScale *= Random.Range(scaleRange.x, scaleRange.y);
+            obj.AddComponent<ObstacleMover>().Init(-player.forward, Random.Range(40f, 90f), Random.onUnitSphere, Random.Range(20f, 80f));
         }
     }
 }

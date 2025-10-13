@@ -7,7 +7,6 @@ public class ObstacleMover : MonoBehaviour
     public float rotationSpeed = 50f;
     public Vector3 rotationAxis = Vector3.up;
     public Vector3 InitialDirection = Vector3.back;
-    private Transform player;
     private Rigidbody rb;
 
     public void Init(Vector3 direction, float moveSpeed, Vector3 rotAxis, float rotSpeed)
@@ -16,12 +15,7 @@ public class ObstacleMover : MonoBehaviour
         speed = moveSpeed;
         rotationAxis = rotAxis;
         rotationSpeed = rotSpeed;
-    }
-
-    void Start()
-    {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        rb = GetComponent<Rigidbody>();
+        rb ??= GetComponent<Rigidbody>();
 
         if (rb != null)
         {
@@ -34,6 +28,12 @@ public class ObstacleMover : MonoBehaviour
             Debug.LogWarning("No Rigidbody found on Obstacle. Using Transform for movement.");
 
         Destroy(gameObject, 10f); // nettoyage après passage
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        var collisionHandler = collision.gameObject.GetComponentInParent<ShipCollisionHandler>();
+        collisionHandler?.CollisionHandler(collision.contacts[0].point);
     }
 
     void ApplyTagRecursively(Transform obj, string tag)
