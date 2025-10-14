@@ -506,6 +506,9 @@ MonoBehaviour:
   spawnInterval: {x: 10, y: 30}
   spawnRangeX: {x: -15, y: 15}
   spawnRangeY: {x: -2, y: 2}
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0

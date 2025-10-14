@@ -21,7 +21,6 @@ public class EnemyAI : MonoBehaviour
     public float detectRange = 80f;
     public float avoidStrength = 50f;
     public LayerMask obstacleMask;
-    public float failAvoidChance = 0.25f; // 25% chance de rater l’esquive
     public float avoidCooldown = 1.5f;
     public float detectRadius = 30f;
     public Vector2 posThreshold;
@@ -59,7 +58,7 @@ public class EnemyAI : MonoBehaviour
         {
             Collider[] hits = Physics.OverlapSphere(transform.position, detectRadius, obstacleMask);
 
-            if (hits.Length > 0 && Random.value > failAvoidChance)
+            if (hits.Length > 0)
             {
                 Vector3 totalAvoid = Vector3.zero;
 
