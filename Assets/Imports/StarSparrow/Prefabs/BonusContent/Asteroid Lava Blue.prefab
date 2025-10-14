@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 23523893699283024}
   - component: {fileID: 6542971176805724472}
   - component: {fileID: 1587898720242408546}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Asteroid Lava Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ MeshCollider:
   m_Enabled: 1
   serializedVersion: 5
   m_Convex: 1
-  m_CookingOptions: 12
+  m_CookingOptions: -1
   m_Mesh: {fileID: 4300000, guid: 4514a249f7ca7d44b8eb4cbd48174504, type: 3}
 --- !u!54 &1587898720242408546
 Rigidbody:

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4948780528468500}
   - component: {fileID: 33115882054601440}
   - component: {fileID: 23840966318288554}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Clouds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 23446806526639468}
   - component: {fileID: 7793136680132656623}
   - component: {fileID: 6620857413512632703}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tinniuq Planet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ MeshCollider:
   m_Enabled: 1
   serializedVersion: 5
   m_Convex: 1
-  m_CookingOptions: 12
+  m_CookingOptions: -1
   m_Mesh: {fileID: 4300000, guid: 614d5d16c663aaf4e8a724ee026d8cf0, type: 3}
 --- !u!54 &6620857413512632703
 Rigidbody:

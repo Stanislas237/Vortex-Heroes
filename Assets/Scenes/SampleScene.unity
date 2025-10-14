@@ -218,7 +218,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 9
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -439,6 +439,7 @@ GameObject:
   m_Component:
   - component: {fileID: 525033707}
   - component: {fileID: 525033708}
+  - component: {fileID: 525033709}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -484,6 +485,27 @@ MonoBehaviour:
   spawnRangeY: {x: -2, y: 2}
   spawnInterval: {x: 1.5, y: 3.5}
   scaleRange: {x: 2, y: 4}
+--- !u!114 &525033709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525033706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef07c4ac6c4dfc346b34e7aea69e53a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 6328280746129097574}
+  enemyPrefabs:
+  - {fileID: 503222116013560536, guid: 96aeffe1bfd1d4b04908e4a5d7e36d36, type: 3}
+  - {fileID: 7920573696653086769, guid: 2998aa3f4512340fdb5648bbeddc679c, type: 3}
+  - {fileID: 6363790887895094179, guid: 196a014f91f13452ba6d7c90d1498982, type: 3}
+  spawnDistance: 400
+  spawnInterval: {x: 10, y: 30}
+  spawnRangeX: {x: -15, y: 15}
+  spawnRangeY: {x: -2, y: 2}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0

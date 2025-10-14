@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 23261711451581766}
   - component: {fileID: -6885440266278557440}
   - component: {fileID: 1727157968159640902}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Asteroid Lava Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ MeshCollider:
   m_Enabled: 1
   serializedVersion: 5
   m_Convex: 1
-  m_CookingOptions: 12
+  m_CookingOptions: -1
   m_Mesh: {fileID: 4300002, guid: 4514a249f7ca7d44b8eb4cbd48174504, type: 3}
 --- !u!54 &1727157968159640902
 Rigidbody:
