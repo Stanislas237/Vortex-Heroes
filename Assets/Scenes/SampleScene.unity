@@ -480,6 +480,7 @@ MonoBehaviour:
   - {fileID: 1822345149752838, guid: 45b62242ff99b0a48a47f713cd6d1687, type: 3}
   - {fileID: 1040074329139878, guid: fa8aadfb07ca2034188c69c6f2ab4624, type: 3}
   - {fileID: 1846397802687310, guid: 8c22678d7aa562145804b6f0af7e603a, type: 3}
+  destroyEffect: {fileID: 5098601501507454547, guid: 9e2c955d906b36a40a6e18eb6c657ea9, type: 3}
   spawnDistance: 500
   spawnRangeX: {x: -15, y: 15}
   spawnRangeY: {x: -2, y: 2}

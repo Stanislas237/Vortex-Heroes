@@ -31,6 +31,7 @@ public class EnemyAI : MonoBehaviour
     private Vector3 avoidDir;
     private bool avoiding;
     private float lastAvoidTime;
+    private Transform mainCamera;
 
     public void Init(Transform playerTransform, Vector2 startPos, LayerMask obsMask)
     {
@@ -40,6 +41,7 @@ public class EnemyAI : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
         rb.isKinematic = false;
+        mainCamera = Camera.main.transform;
 
         // Vitesse initiale légèrement aléatoire
         speed = baseSpeed + Random.Range(-speedVariation, speedVariation);
@@ -47,7 +49,12 @@ public class EnemyAI : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!player) return;
+        if (!player)
+        {
+            rb.linearVelocity = transform.position.z > -10 ? Vector3.back : Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            return;
+        }
 
         Vector3 targetPos = player.position + (Vector3)posThreshold + player.forward * stopDistance;
         float distance = (targetPos - transform.position).magnitude;
@@ -102,15 +109,6 @@ public class EnemyAI : MonoBehaviour
         {
             Quaternion targetRot = Quaternion.LookRotation(rb.linearVelocity.normalized);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.fixedDeltaTime * smoothTurn);
-        }
-    }
-
-    void OnCollisionEnter(Collision col)
-    {
-        if (col.relativeVelocity.magnitude > 10f)
-        {
-            Destroy(gameObject);
-            // Explosion à ajouter ici
         }
     }
 

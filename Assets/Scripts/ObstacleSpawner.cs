@@ -9,6 +9,10 @@ public class ObstacleSpawner : MonoBehaviour
     [Header("Obstacles")]
     public GameObject[] obstaclePrefabs;
 
+    [Header("Destruction")]
+    public GameObject destroyEffect;
+    public int maxCollisionsToDestroy = 50;
+
     [Header("Spawn Settings")]
     public float spawnDistance = 200f;
     public Vector2 spawnRangeX = new(-150f, 150f);
@@ -22,10 +26,11 @@ public class ObstacleSpawner : MonoBehaviour
 
     IEnumerator SpawnRoutine()
     {
-        while (true)
-        {
-            yield return new WaitForSeconds(Random.Range(spawnInterval.x, spawnInterval.y));
+        ObstacleMover.destroyEffect = destroyEffect;
+        ObstacleMover.maxCollisionsToDestroy = maxCollisionsToDestroy;
 
+        while (player != null)
+        {
             if (Random.value >= 0.65f) continue; // 35% de chance de spawn
 
             // Choix aléatoire d’un prefab
@@ -39,6 +44,8 @@ public class ObstacleSpawner : MonoBehaviour
             GameObject obj = Instantiate(prefab, spawnPos, Random.rotation);
             obj.transform.localScale *= Random.Range(scaleRange.x, scaleRange.y);
             obj.AddComponent<ObstacleMover>().Init(-player.forward, Random.Range(40f, 90f), Random.onUnitSphere, Random.Range(20f, 80f));
+
+            yield return new WaitForSeconds(Random.Range(spawnInterval.x, spawnInterval.y));
         }
     }
 }

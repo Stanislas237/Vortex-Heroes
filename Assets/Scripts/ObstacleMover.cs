@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody))]
 public class ObstacleMover : MonoBehaviour
@@ -7,7 +8,12 @@ public class ObstacleMover : MonoBehaviour
     public float rotationSpeed = 50f;
     public Vector3 rotationAxis = Vector3.up;
     public Vector3 InitialDirection = Vector3.back;
+    public static GameObject destroyEffect;
+    public static int maxCollisionsToDestroy = 50;
+
     private Rigidbody rb;
+    private static GameObject player;
+    private Dictionary<string, int> collisionAmount = new();
 
     public void Init(Vector3 direction, float moveSpeed, Vector3 rotAxis, float rotSpeed)
     {
@@ -27,7 +33,7 @@ public class ObstacleMover : MonoBehaviour
         else
             Debug.LogWarning("No Rigidbody found on Obstacle. Using Transform for movement.");
 
-        Destroy(gameObject, 20f); // nettoyage après passage
+        Destroy(gameObject, 60f); // nettoyage après passage
     }
 
     void OnCollisionEnter(Collision collision)
@@ -36,10 +42,28 @@ public class ObstacleMover : MonoBehaviour
         collisionHandler?.CollisionHandler(collision.contacts[0].point);
     }
 
-    void ApplyTagRecursively(Transform obj, string tag)
+    void OnCollisionStay(Collision collision)
     {
-        obj.tag = tag;
-        foreach (Transform child in obj)
-            ApplyTagRecursively(child, tag);
+        var name = collision.gameObject.name;
+        collisionAmount[name] = collisionAmount.GetValueOrDefault(name, 0) + 1;
+
+        if (collisionAmount[name] >= maxCollisionsToDestroy)
+        {
+            Debug.Log("Collision Stay with " + name);
+            
+            if (destroyEffect != null)
+            {
+                Instantiate(destroyEffect, collision.gameObject.transform).transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+                rb.AddExplosionForce(500f, collision.contacts[0].point, 20f, 10f, ForceMode.Impulse);
+                Destroy(collision.gameObject, 2.3f);
+            }
+        }
     }
+
+    // void ApplyTagRecursively(Transform obj, string tag)
+    // {
+    //     obj.tag = tag;
+    //     foreach (Transform child in obj)
+    //         ApplyTagRecursively(child, tag);
+    // }
 }
