@@ -16,6 +16,7 @@ public class EnemyAI : MonoBehaviour
     [Header("Agitation / Drift")]
     public float wobbleAmplitude = 1.5f;
     public float wobbleFrequency = 5f;
+    public int enemyStopingDistanceAfterLose = -30;
 
     [Header("Obstacle Avoidance")]
     public float detectRange = 80f;
@@ -51,7 +52,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (!player)
         {
-            rb.linearVelocity = transform.position.z > -10 ? Vector3.back : Vector3.zero;
+            rb.linearVelocity = transform.position.z > enemyStopingDistanceAfterLose ? Vector3.back * speed : Vector3.zero;
             rb.angularVelocity = Vector3.zero;
             return;
         }

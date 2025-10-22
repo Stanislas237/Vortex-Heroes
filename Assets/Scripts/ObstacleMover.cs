@@ -54,8 +54,8 @@ public class ObstacleMover : MonoBehaviour
             if (destroyEffect != null)
             {
                 Instantiate(destroyEffect, collision.gameObject.transform).transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-                rb.AddExplosionForce(500f, collision.contacts[0].point, 20f, 10f, ForceMode.Impulse);
-                Destroy(collision.gameObject, 2.3f);
+                // rb.AddExplosionForce(500f, collision.contacts[0].point, 20f, 10f, ForceMode.Impulse);
+                Destroy(collision.gameObject, .3f);
             }
         }
     }
