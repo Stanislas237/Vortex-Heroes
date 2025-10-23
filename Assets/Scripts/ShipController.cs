@@ -30,6 +30,8 @@ public class ShipController : MonoBehaviour
         // --- Initialisation du skybox ---
         if (skyboxMaterial != null)
         {
+            skyboxMaterial.SetFloat("_StarSpeed", 2);
+            skyboxMaterial.SetFloat("_RotateSpeed", 4);
             RenderSettings.skybox = skyboxMaterial;
             DynamicGI.UpdateEnvironment();
         }
@@ -73,5 +75,11 @@ public class ShipController : MonoBehaviour
         Vector3 pos = transform.position;
         pos.z = 0;
         transform.position = pos;
+    }
+
+    void OnDestroy()
+    {
+        skyboxMaterial.SetFloat("_StarSpeed", 0);
+        skyboxMaterial.SetFloat("_RotateSpeed", 0.6f);
     }
 }

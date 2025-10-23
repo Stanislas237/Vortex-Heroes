@@ -1,8 +1,11 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ObstacleSpawner : MonoBehaviour
 {
+    public static List<ObstacleMover> obstacles;
+
     [Header("Target (the player or ship)")]
     public Transform player;
 
@@ -26,6 +29,8 @@ public class ObstacleSpawner : MonoBehaviour
 
     IEnumerator SpawnRoutine()
     {
+        obstacles = new();
+        ObstacleMover.player = player.gameObject;
         ObstacleMover.destroyEffect = destroyEffect;
         ObstacleMover.maxCollisionsToDestroy = maxCollisionsToDestroy;
 
@@ -43,7 +48,9 @@ public class ObstacleSpawner : MonoBehaviour
             // Création de l’obstacle
             GameObject obj = Instantiate(prefab, spawnPos, Random.rotation);
             obj.transform.localScale *= Random.Range(scaleRange.x, scaleRange.y);
-            obj.AddComponent<ObstacleMover>().Init(-player.forward, Random.Range(40f, 90f), Random.onUnitSphere, Random.Range(20f, 80f));
+            var obstacle = obj.AddComponent<ObstacleMover>();
+            obstacle.Init(-player.forward, Random.Range(40f, 90f), Random.onUnitSphere, Random.Range(20f, 80f));
+            obstacles.Add(obstacle);
 
             yield return new WaitForSeconds(Random.Range(spawnInterval.x, spawnInterval.y));
         }

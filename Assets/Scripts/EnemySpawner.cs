@@ -1,36 +1,45 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public static List<EnemyAI> enemies;
+
+    [Header("Target (the player or ship)")]
     public Transform player;
+
+    [Header("Enemies")]
     public GameObject[] enemyPrefabs;
+
+    [Header("Spawn Settings")]
     public float spawnDistance = 400f;
-    public Vector2 spawnInterval = new(3f, 6f);
     public Vector2 spawnRangeX = new(-150f, 150f);
     public Vector2 spawnRangeY = new(-50f, 50f);
+    public Vector2 spawnInterval = new(3f, 6f);
+
+    [Header("Obstacle detection")]
     public LayerMask obstacleMask;
 
 
-    private float timer;
+    void Start() => StartCoroutine(SpawnRoutine());
 
-    void Update()
+    IEnumerator SpawnRoutine()
     {
-        timer -= Time.deltaTime;
-        if (timer <= 0f)
+        enemies = new();
+
+        while (player != null)
         {
-            SpawnEnemy();
-            timer = Random.Range(spawnInterval.x, spawnInterval.y);
+            if (!player) yield break;
+
+            // Position random autour de la ligne avant du joueur
+            Vector3 spawnThresold = new(Random.Range(spawnRangeX.x, spawnRangeX.y), Random.Range(spawnRangeY.x, spawnRangeY.y), spawnDistance);
+
+            var enemy = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)], player.position + spawnThresold, Quaternion.identity).AddComponent<EnemyAI>();
+            enemy.Init(player, (Vector2)spawnThresold, obstacleMask);
+            enemies.Add(enemy);
+
+            yield return new WaitForSeconds(Random.Range(spawnInterval.x, spawnInterval.y));
         }
-    }
-
-    void SpawnEnemy()
-    {
-        if (!player) return;
-
-        // Position random autour de la ligne avant du joueur
-        Vector3 spawnThresold = new(Random.Range(spawnRangeX.x, spawnRangeX.y), Random.Range(spawnRangeY.x, spawnRangeY.y), spawnDistance);
-
-        GameObject prefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
-        Instantiate(prefab, player.position + spawnThresold, Quaternion.identity).AddComponent<EnemyAI>().Init(player, (Vector2)spawnThresold, obstacleMask);
     }
 }

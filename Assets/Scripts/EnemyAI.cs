@@ -8,7 +8,7 @@ public class EnemyAI : MonoBehaviour
 
     [Header("Movement")]
     public float baseSpeed = 60f;
-    public float speedVariation = 10f;
+    public float speedVariation = 20f;
     public float stopDistance = 100f;
     public float followDistance = 500f;
     public float smoothTurn = 3f;
@@ -16,23 +16,28 @@ public class EnemyAI : MonoBehaviour
     [Header("Agitation / Drift")]
     public float wobbleAmplitude = 1.5f;
     public float wobbleFrequency = 5f;
+    private float wobbleTimer;
+    
+    [Header("Lose")]
     public int enemyStopingDistanceAfterLose = -30;
 
     [Header("Obstacle Avoidance")]
-    public float detectRange = 80f;
-    public float avoidStrength = 50f;
     public LayerMask obstacleMask;
-    public float avoidCooldown = 1.5f;
-    public float detectRadius = 30f;
     public Vector2 posThreshold;
+    public float avoidTimer = .5f;
+    public float avoidCooldown = 1.5f;
+    public float detectRadius = 50f;
 
+    // Movement
+    private Transform mainCamera;
     private Rigidbody rb;
     private float speed;
-    private float wobbleTimer;
+        
+    // Obstacle Avoidance
     private Vector3 avoidDir;
     private bool avoiding;
     private float lastAvoidTime;
-    private Transform mainCamera;
+    
 
     public void Init(Transform playerTransform, Vector2 startPos, LayerMask obsMask)
     {
@@ -61,21 +66,19 @@ public class EnemyAI : MonoBehaviour
         float distance = (targetPos - transform.position).magnitude;
 
         // --- Obstacle detection ---
-        avoiding = false;
+        if (avoiding && Time.time - lastAvoidTime > avoidTimer)
+        {
+            avoiding = false;
+            avoidDir = Vector3.zero;
+        }
+
         if (Time.time - lastAvoidTime > avoidCooldown)
         {
             Collider[] hits = Physics.OverlapSphere(transform.position, detectRadius, obstacleMask);
 
             if (hits.Length > 0)
             {
-                Vector3 totalAvoid = Vector3.zero;
-
-                foreach (var hit in hits)
-                {
-                    Vector3 awayFromObstacle = (transform.position - hit.transform.position).normalized;
-                    totalAvoid += awayFromObstacle;
-                }
-
+                Vector3 totalAvoid = transform.position - hits[0].transform.position;
                 if (totalAvoid != Vector3.zero)
                 {
                     totalAvoid.Normalize();
@@ -83,6 +86,7 @@ public class EnemyAI : MonoBehaviour
                     // On tourne légèrement à gauche ou droite (style dogfight)
                     float side = Random.value > 0.5f ? 90f : -90f;
                     avoidDir = (Quaternion.Euler(0, side, 0) * totalAvoid).normalized;
+                    // avoidDir.z = 0;
                     avoiding = true;
                     lastAvoidTime = Time.time;
                 }
@@ -94,7 +98,7 @@ public class EnemyAI : MonoBehaviour
         Vector3 wobble = new Vector3(Mathf.Sin(wobbleTimer), Mathf.Cos(wobbleTimer * 0.8f), 0f) * wobbleAmplitude;
 
         // --- Direction combinée ---
-        Vector3 moveDir = (distance > 0 ? (targetPos - transform.position).normalized : Vector3.zero) + (avoiding ? avoidDir * 0.8f : Vector3.zero) + wobble * 0.01f;
+        Vector3 moveDir = (distance > 0 ? (targetPos - transform.position).normalized : Vector3.zero) + wobble * 0.01f;
         moveDir.Normalize();
 
         // --- Gestion de la vitesse ---
@@ -102,7 +106,7 @@ public class EnemyAI : MonoBehaviour
         if (distance <= stopDistance)
             targetSpeed = Mathf.Lerp(speed, 0, (stopDistance - distance) / stopDistance);
 
-        Vector3 desiredVelocity = moveDir * targetSpeed;
+        Vector3 desiredVelocity = moveDir * targetSpeed + avoidDir * speed;
         rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, desiredVelocity, Time.fixedDeltaTime * smoothTurn);
 
         // --- Orientation fluide ---
