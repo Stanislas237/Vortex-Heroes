@@ -461,9 +461,9 @@ MonoBehaviour:
   - {fileID: 7920573696653086769, guid: 2998aa3f4512340fdb5648bbeddc679c, type: 3}
   - {fileID: 6363790887895094179, guid: 196a014f91f13452ba6d7c90d1498982, type: 3}
   spawnDistance: 400
-  spawnInterval: {x: 10, y: 30}
   spawnRangeX: {x: -15, y: 15}
   spawnRangeY: {x: -2, y: 2}
+  spawnInterval: {x: 10, y: 30}
   obstacleMask:
     serializedVersion: 2
     m_Bits: 8
