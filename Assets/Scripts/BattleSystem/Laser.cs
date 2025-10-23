@@ -30,6 +30,19 @@ public class Laser : MonoBehaviour
         if ((isObstacle && !canDamageObstacles) || (!isObstacle && !isEnemy && !isPlayer))
             return;
 
+        if (hitEffect)
+        {
+            // Trouver le point de contact le plus proche
+            Vector3 hitPoint = other.ClosestPoint(transform.position);
+
+            // Calculer une approximation de la normale (direction opposée du laser)
+            Vector3 hitNormal = (hitPoint - transform.position).normalized;
+
+            // Instancier l’effet d’impact orienté selon la normale
+            GameObject fx = Instantiate(hitEffect, hitPoint, Quaternion.LookRotation(hitNormal));
+            Destroy(fx, .5f);
+        }
+
         if (TopParent.TryGetComponent(out Mortal m))
             m.TakeDamage(damage);            
         Destroy(gameObject);
