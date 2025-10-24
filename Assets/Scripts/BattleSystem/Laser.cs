@@ -16,7 +16,7 @@ public class Laser : MonoBehaviour
         Destroy(gameObject, lifeTime);
     }
 
-    void Update() => transform.Translate(Vector3.forward * speed * Time.deltaTime);
+    void Update() => transform.Translate(transform.forward * speed * Time.deltaTime);
 
     void OnTriggerEnter(Collider other)
     {
@@ -40,7 +40,7 @@ public class Laser : MonoBehaviour
 
             // Instancier l’effet d’impact orienté selon la normale
             GameObject fx = Instantiate(hitEffect, hitPoint, Quaternion.LookRotation(hitNormal));
-            Destroy(fx, .5f);
+            Destroy(fx, .3f);
         }
 
         if (TopParent.TryGetComponent(out Mortal m))
