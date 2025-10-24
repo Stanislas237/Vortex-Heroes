@@ -43,6 +43,9 @@ public class ShipController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
         rb.isKinematic = false;
+
+        if (TryGetComponent(out PlayerShooter shooter))
+            shooter.Init(Color.yellow, 5f, .1f);
     }
 
     void Update()

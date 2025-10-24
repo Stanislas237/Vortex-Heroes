@@ -5,7 +5,6 @@ public class Laser : MonoBehaviour
     public float speed = 400f;
     public float lifeTime = 5f;
     public int damage = 25;
-    public bool canDamageObstacles = false;
     public GameObject hitEffect;
 
     private string ownerTag;
@@ -27,7 +26,7 @@ public class Laser : MonoBehaviour
         bool isEnemy = TopParent.CompareTag("Enemy");
         bool isPlayer = TopParent.CompareTag("Player");
 
-        if ((isObstacle && !canDamageObstacles) || (!isObstacle && !isEnemy && !isPlayer))
+        if (!isObstacle && !isEnemy && !isPlayer)
             return;
 
         if (hitEffect)

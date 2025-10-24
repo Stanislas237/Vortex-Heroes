@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: faa91f83863a0460db7e477a4112aa2a, type: 2}
+    - target: {fileID: -8377890249994761509, guid: 55a7154760840453cbf09a19f950e2f8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 55a7154760840453cbf09a19f950e2f8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -64,6 +68,14 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: faa91f83863a0460db7e477a4112aa2a, type: 2}
+    - target: {fileID: -5732264684310393186, guid: 55a7154760840453cbf09a19f950e2f8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -5732264684310393186, guid: 55a7154760840453cbf09a19f950e2f8, type: 3}
+      propertyPath: m_TagString
+      value: LaserHole
+      objectReference: {fileID: 0}
     - target: {fileID: -4405195325799047175, guid: 55a7154760840453cbf09a19f950e2f8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -72,10 +84,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: UFO_Color1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 55a7154760840453cbf09a19f950e2f8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 55a7154760840453cbf09a19f950e2f8, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3494720697089065987, guid: 55a7154760840453cbf09a19f950e2f8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4012827835745535102, guid: 55a7154760840453cbf09a19f950e2f8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4012827835745535102, guid: 55a7154760840453cbf09a19f950e2f8, type: 3}
+      propertyPath: m_TagString
+      value: LaserHole
+      objectReference: {fileID: 0}
     - target: {fileID: 4309071809011387526, guid: 55a7154760840453cbf09a19f950e2f8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: faa91f83863a0460db7e477a4112aa2a, type: 2}
+    - target: {fileID: 5595980724964689651, guid: 55a7154760840453cbf09a19f950e2f8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595980724964689651, guid: 55a7154760840453cbf09a19f950e2f8, type: 3}
+      propertyPath: m_TagString
+      value: LaserHole
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720255622361193804, guid: 55a7154760840453cbf09a19f950e2f8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5776625771689341860, guid: 55a7154760840453cbf09a19f950e2f8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 

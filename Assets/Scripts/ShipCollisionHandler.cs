@@ -10,8 +10,10 @@ public class ShipCollisionHandler : MonoBehaviour
     public float restabilizeDuration = .5f;
     public float spinIntensity = 80f;
 
+    [HideInInspector]
+    public bool isDestabilized = false;
+
     private Rigidbody rb;
-    private bool isDestabilized = false;
 
     void Start()
     {

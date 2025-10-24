@@ -8,7 +8,7 @@ public static class Utils
     public static List<Transform> GetTransformsTag(Transform parent, string tag)
     {
         var list = new List<Transform>();
-        foreach (var t in parent)
+        foreach (Transform t in parent)
         {
             if (t.CompareTag(tag))
                 list.Add(t);

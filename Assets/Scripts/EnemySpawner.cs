@@ -11,6 +11,7 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("Enemies")]
     public GameObject[] enemyPrefabs;
+    public GameObject laserPrefab;
 
     [Header("Spawn Settings")]
     public float spawnDistance = 400f;
@@ -35,9 +36,15 @@ public class EnemySpawner : MonoBehaviour
             // Position random autour de la ligne avant du joueur
             Vector3 spawnThresold = new(Random.Range(spawnRangeX.x, spawnRangeX.y), Random.Range(spawnRangeY.x, spawnRangeY.y), spawnDistance);
 
-            var enemy = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)], player.position + spawnThresold, Quaternion.identity).AddComponent<EnemyAI>();
+            var enemyObj = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)], player.position + spawnThresold, Quaternion.identity);
+            var enemy = enemyObj.AddComponent<EnemyAI>();
             enemy.Init(player, (Vector2)spawnThresold, obstacleMask);
             enemies.Add(enemy);
+
+            var enemyShooter = enemyObj.AddComponent<Shooter>();
+            enemyShooter.target = player;
+            enemyShooter.Init(Color.red, 7f, .2f);
+            enemyShooter.laserPrefab = laserPrefab;
 
             yield return new WaitForSeconds(Random.Range(spawnInterval.x, spawnInterval.y));
         }

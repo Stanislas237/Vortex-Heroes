@@ -29,7 +29,6 @@ public class EnemyAI : MonoBehaviour
     public float detectRadius = 50f;
 
     // Movement
-    private Transform mainCamera;
     private Rigidbody rb;
     private float speed;
         
@@ -47,7 +46,6 @@ public class EnemyAI : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
         rb.isKinematic = false;
-        mainCamera = Camera.main.transform;
 
         // Vitesse initiale légèrement aléatoire
         speed = baseSpeed + Random.Range(-speedVariation, speedVariation);

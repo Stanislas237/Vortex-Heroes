@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Shooter : MonoBehaviour
 {
@@ -7,7 +8,7 @@ public class Shooter : MonoBehaviour
     public List<Transform> weaponHoles;
     [HideInInspector]
     public Transform target;
-    public static GameObject laserPrefab;
+    public GameObject laserPrefab;
 
     [SerializeField]
     private string holesTag = "LaserHole";
@@ -16,24 +17,33 @@ public class Shooter : MonoBehaviour
     public float aimError = 15f; // en degrés
     public float shootTimer = .1f;
 
-    private Renderer renderer;
+    private Renderer objRenderer;
     private Color laserColor;
     private MaterialPropertyBlock materialPropertyBlock;
 
-    public void Init(Color laserColor, float aimError, float shootTimer)
+    public virtual void Init(Color laserColor, float aimError, float shootTimer)
     {
         weaponHoles = Utils.GetTransformsTag(transform, holesTag);
         this.aimError = aimError;
         this.shootTimer = shootTimer;
         this.laserColor = laserColor;
+
+        StartCoroutine(Shoot());
     }
+
+    protected virtual bool CanShoot() => true;
+    
+    protected virtual bool LoopCondition() => target && weaponHoles.Count > 0;
 
     private IEnumerator Shoot()
     {
         int index = 0;
-        while (target)
+        while (LoopCondition())
         {
             yield return new WaitForSeconds(shootTimer);
+
+            if (!CanShoot() || !LoopCondition())
+                continue;
 
             var firePoint = weaponHoles[index++ % weaponHoles.Count];
             Vector3 dirToPlayer = (target.position - firePoint.position).normalized;
@@ -44,16 +54,16 @@ public class Shooter : MonoBehaviour
             laser.AddComponent<Laser>().Initialize(gameObject.tag);
 
             // Modifier la couleur du laser
-            renderer = laser.transform.GetChild(0).GetComponent<Renderer>();
+            objRenderer = laser.transform.GetChild(0).GetComponent<Renderer>();
 
-            if (!materialPropertyBlock)
+            if (materialPropertyBlock != null)
             {
                 materialPropertyBlock = new();
-                renderer.GetPropertyBlock(materialPropertyBlock);
+                objRenderer.GetPropertyBlock(materialPropertyBlock);
                 materialPropertyBlock.SetColor("_Color", laserColor);
             }
             
-            renderer?.SetPropertyBlock(materialPropertyBlock);
+            objRenderer?.SetPropertyBlock(materialPropertyBlock);
         }            
     }
 }
