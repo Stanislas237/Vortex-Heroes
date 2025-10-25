@@ -14,7 +14,7 @@ public class ObstacleSpawner : MonoBehaviour
 
     [Header("Destruction")]
     public GameObject destroyEffect;
-    public int maxCollisionsToDestroy = 50;
+    public int maxCollisionsToDestroy = 20;
 
     [Header("Spawn Settings")]
     public float spawnDistance = 200f;

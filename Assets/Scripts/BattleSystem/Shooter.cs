@@ -14,8 +14,8 @@ public class Shooter : MonoBehaviour
     private string holesTag = "LaserHole";
 
     [Header("Shooter settings")]
-    public float aimError = 15f; // en degrés
-    public float shootTimer = .1f;
+    public float aimError = .8f; // en degrés
+    public float shootTimer = .2f;
 
     private Renderer objRenderer;
     private Color laserColor;
@@ -38,32 +38,60 @@ public class Shooter : MonoBehaviour
     private IEnumerator Shoot()
     {
         int index = 0;
+
+        yield return new WaitForSeconds(shootTimer);
+        
+        // On vérifie une seule fois si la boucle peut commencer.
         while (LoopCondition())
         {
-            yield return new WaitForSeconds(shootTimer);
+            // Si on ne peut pas tirer, ou si la boucle n'est plus valide, on passe à l'itération suivante.
+            if (CanShoot())
+            {                
+                // Calcul du point de tir et de la direction vers la cible
+                var firePoint = weaponHoles[index++ % weaponHoles.Count];
+                Vector3 dirToPlayer = (target.position - firePoint.position).normalized;
 
-            if (!CanShoot() || !LoopCondition())
-                continue;
+                // Appliquer une imprécision aléatoire à la direction du tir
+                dirToPlayer = ApplyAimError(dirToPlayer);
 
-            var firePoint = weaponHoles[index++ % weaponHoles.Count];
-            Vector3 dirToPlayer = (target.position - firePoint.position).normalized;
-            // Ajoute une imprécision aléatoire
-            dirToPlayer = Quaternion.Euler(Random.Range(-aimError, aimError), Random.Range(-aimError, aimError), 0) * dirToPlayer;
+                // Instancier le laser
+                var laser = InstantiateLaser(firePoint.position, dirToPlayer);
 
-            var laser = Instantiate(laserPrefab, firePoint.position, Quaternion.LookRotation(dirToPlayer));
-            laser.AddComponent<Laser>().Initialize(gameObject.tag);
-
-            // Modifier la couleur du laser
-            objRenderer = laser.transform.GetChild(0).GetComponent<Renderer>();
-
-            if (materialPropertyBlock != null)
-            {
-                materialPropertyBlock = new();
-                objRenderer.GetPropertyBlock(materialPropertyBlock);
-                materialPropertyBlock.SetColor("_Color", laserColor);
+                // Modifier la couleur du laser si nécessaire
+                SetLaserColor(laser);
             }
-            
-            objRenderer?.SetPropertyBlock(materialPropertyBlock);
-        }            
+
+            // Attendre entre chaque tir.
+            yield return new WaitForSeconds(shootTimer);
+        }
+    }
+
+    // Applique l'imprécision à la direction du tir
+    private Vector3 ApplyAimError(Vector3 direction) =>
+        // Génère un écart aléatoire pour la direction de tir
+        Quaternion.Euler(Random.Range(-aimError, aimError), Random.Range(-aimError, aimError), 0) * direction;
+
+    // Crée et instancie le laser
+    private Transform InstantiateLaser(Vector3 position, Vector3 direction)
+    {
+        var laser = Instantiate(laserPrefab, position, Quaternion.LookRotation(direction));
+        laser.GetComponentInChildren<Laser>().Initialize(gameObject.tag, gameObject.layer); // Initialise le laser avec le tag de l'objet
+        return laser.transform;
+    }
+
+    // Applique la couleur au laser instancié
+    private void SetLaserColor(Transform laser)
+    {
+        var objRenderer = laser.GetChild(0).GetComponent<Renderer>();
+
+        // On ne crée le PropertyBlock qu'une seule fois
+        if (materialPropertyBlock == null)
+        {
+            materialPropertyBlock = new();
+            objRenderer.GetPropertyBlock(materialPropertyBlock);  // Récupère l'état actuel du matériau
+            materialPropertyBlock.SetColor("_Color", laserColor); // Applique la nouvelle couleur            
+        }
+
+        objRenderer.SetPropertyBlock(materialPropertyBlock);   // Applique les modifications au matériau
     }
 }

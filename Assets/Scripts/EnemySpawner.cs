@@ -43,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
 
             var enemyShooter = enemyObj.AddComponent<Shooter>();
             enemyShooter.target = player;
-            enemyShooter.Init(Color.red, 7f, .2f);
+            enemyShooter.Init(Color.red, 1f, .5f);
             enemyShooter.laserPrefab = laserPrefab;
 
             yield return new WaitForSeconds(Random.Range(spawnInterval.x, spawnInterval.y));

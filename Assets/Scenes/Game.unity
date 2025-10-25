@@ -437,7 +437,7 @@ MonoBehaviour:
   - {fileID: 1040074329139878, guid: fa8aadfb07ca2034188c69c6f2ab4624, type: 3}
   - {fileID: 1846397802687310, guid: 8c22678d7aa562145804b6f0af7e603a, type: 3}
   destroyEffect: {fileID: 5098601501507454547, guid: 9e2c955d906b36a40a6e18eb6c657ea9, type: 3}
-  maxCollisionsToDestroy: 50
+  maxCollisionsToDestroy: 20
   spawnDistance: 500
   spawnRangeX: {x: -15, y: 15}
   spawnRangeY: {x: -2, y: 2}
@@ -12240,14 +12240,13 @@ MonoBehaviour:
   target: {fileID: 0}
   laserPrefab: {fileID: 6783171554482378020, guid: e95b6e91750dbb9419c8c27d9fe1e6a0, type: 3}
   holesTag: LaserHole
-  aimError: 15
-  shootTimer: 0.1
+  aimError: 0.8
+  shootTimer: 0.2
   shipCollisionHandler: {fileID: 6672436219827739103}
+  shipController: {fileID: 6672436219827739101}
   targetMask:
     serializedVersion: 2
     m_Bits: 72
-  minRotX: 10
-  minRotZ: 10
 --- !u!1 &7138597496551036685
 GameObject:
   m_ObjectHideFlags: 0

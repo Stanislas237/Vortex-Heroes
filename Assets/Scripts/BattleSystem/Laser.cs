@@ -5,17 +5,25 @@ public class Laser : MonoBehaviour
     public float speed = 400f;
     public float lifeTime = 5f;
     public int damage = 25;
+    public Vector3 direction;
     public GameObject hitEffect;
 
     private string ownerTag;
 
-    public void Initialize(string owner)
+    public void Initialize(string owner, LayerMask layer)
     {
         ownerTag = owner;
+
+        if (TryGetComponent(out Collider collider))
+        {
+            collider.excludeLayers = layer;
+            collider.enabled = collider.isTrigger = true;
+        }
+
         Destroy(gameObject, lifeTime);
     }
 
-    void Update() => transform.Translate(transform.forward * speed * Time.deltaTime);
+    void Update() => transform.Translate(-transform.forward * speed * Time.deltaTime);
 
     void OnTriggerEnter(Collider other)
     {
@@ -43,7 +51,9 @@ public class Laser : MonoBehaviour
         }
 
         if (TopParent.TryGetComponent(out Mortal m))
-            m.TakeDamage(damage);            
+            m.TakeDamage(damage);
         Destroy(gameObject);
     }
+
+    void OnDestroy() => Destroy(transform.parent.gameObject);
 }

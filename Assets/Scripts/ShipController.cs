@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody), typeof(ShipCollisionHandler))]
+[RequireComponent(typeof(Rigidbody), typeof(ShipCollisionHandler), typeof(PlayerShooter))]
 public class ShipController : MonoBehaviour
 {
     [Header("Movement Settings")]
@@ -15,6 +15,8 @@ public class ShipController : MonoBehaviour
 
     [Header("Oscillation (ship shake)")]
     public Material skyboxMaterial; // Matériau du skybox
+
+    public bool IsMoving => inputDir != Vector3.zero;
 
     private PlayerInputActions playerInputActions;
     private Vector3 inputDir;
