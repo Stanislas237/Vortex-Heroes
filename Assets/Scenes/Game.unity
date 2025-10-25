@@ -119,6 +119,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &27893758
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 27893759}
+  m_Layer: 0
+  m_Name: LasersParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &27893759
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27893758}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &304638997
 GameObject:
   m_ObjectHideFlags: 0
@@ -12155,6 +12186,7 @@ GameObject:
   - component: {fileID: 6672436219827739101}
   - component: {fileID: 6672436219827739103}
   - component: {fileID: 6672436219827739104}
+  - component: {fileID: 6672436219827739105}
   m_Layer: 0
   m_Name: StarSparrow17
   m_TagString: Player
@@ -12247,6 +12279,21 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 72
+--- !u!114 &6672436219827739105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6672436219827739100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25d79a1562235574e88e4df4313d302e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 40
+  deathEffect: {fileID: 5098601501507454547, guid: 9e2c955d906b36a40a6e18eb6c657ea9, type: 3}
+  healthBar: {fileID: 0}
 --- !u!1 &7138597496551036685
 GameObject:
   m_ObjectHideFlags: 0
@@ -13106,6 +13153,7 @@ SceneRoots:
   - {fileID: 330585546}
   - {fileID: 2040955225}
   - {fileID: 1771264998}
+  - {fileID: 27893759}
   - {fileID: 832575519}
   - {fileID: 6328280746129097574}
   - {fileID: 525033707}

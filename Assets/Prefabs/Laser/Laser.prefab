@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 6746737643741123867}
   - component: {fileID: 3753779506087017508}
   - component: {fileID: 6724234009095490376}
+  - component: {fileID: 5645693794818337603}
   - component: {fileID: 2199023288807594991}
   m_Layer: 0
   m_Name: Laser
@@ -135,7 +136,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 2
@@ -143,6 +144,33 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &5645693794818337603
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9130215370136042886}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 1
 --- !u!114 &2199023288807594991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,6 +185,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 100
   lifeTime: 5
-  damage: 25
+  damage: 5
   direction: {x: 0, y: 0, z: 0}
   hitEffect: {fileID: 6871300112279819372, guid: 6d01d19fb065aaf409f28b7d4ce5e771, type: 3}

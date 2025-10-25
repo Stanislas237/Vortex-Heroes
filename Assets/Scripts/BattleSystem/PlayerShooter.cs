@@ -20,7 +20,7 @@ public class PlayerShooter : Shooter
         base.Init(laserColor, aimError, shootTimer);
     }
 
-    protected override bool CanShoot() => target != null && !shipCollisionHandler.isDestabilized && !shipController.IsMoving;
+    protected override bool CanShoot() => target != null && target.position.z > transform.position.z + 10 && !shipCollisionHandler.isDestabilized && !shipController.IsMoving;
 
     protected override bool LoopCondition() => weaponHoles.Count > 0;
 
@@ -50,7 +50,7 @@ public class PlayerShooter : Shooter
 
             if (isEnemy || isObstacle)
             {
-                target = Utils.GetTopMostParent(hit.collider.transform);
+                target = hit.collider.transform.root;
                 // // Toggle du lock
                 // if (lockedTarget == hit.transform)
                 // {

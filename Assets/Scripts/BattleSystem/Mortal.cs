@@ -23,6 +23,8 @@ public class Mortal : MonoBehaviour
             Die();
     }
 
+    public void TakeDamage() => Die();
+
     void UpdateUI()
     {
         if (healthBar != null)
@@ -31,9 +33,14 @@ public class Mortal : MonoBehaviour
 
     void Die()
     {
-        if (deathEffect)
-            Instantiate(deathEffect, transform.position, Quaternion.identity);
-
-        Destroy(gameObject);
+        if (gameObject.CompareTag("Player"))
+            foreach (var obstacle in ObstacleSpawner.obstacles)
+                obstacle?.StopAllMoves();
+        
+        if (deathEffect != null)
+        {
+            Instantiate(deathEffect, transform).transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            Destroy(gameObject, .3f);
+        }
     }
 }

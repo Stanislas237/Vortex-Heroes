@@ -13,7 +13,6 @@ public class ObstacleSpawner : MonoBehaviour
     public GameObject[] obstaclePrefabs;
 
     [Header("Destruction")]
-    public GameObject destroyEffect;
     public int maxCollisionsToDestroy = 20;
 
     [Header("Spawn Settings")]
@@ -31,7 +30,6 @@ public class ObstacleSpawner : MonoBehaviour
     {
         obstacles = new();
         ObstacleMover.player = player.gameObject;
-        ObstacleMover.destroyEffect = destroyEffect;
         ObstacleMover.maxCollisionsToDestroy = maxCollisionsToDestroy;
 
         while (player != null)

@@ -75,7 +75,7 @@ public class Shooter : MonoBehaviour
     private Transform InstantiateLaser(Vector3 position, Vector3 direction)
     {
         var laser = Instantiate(laserPrefab, position, Quaternion.LookRotation(direction));
-        laser.GetComponentInChildren<Laser>().Initialize(gameObject.tag, gameObject.layer); // Initialise le laser avec le tag de l'objet
+        laser.GetComponentInChildren<Laser>().Initialize(gameObject.tag); // Initialise le laser avec le tag de l'objet
         return laser.transform;
     }
 

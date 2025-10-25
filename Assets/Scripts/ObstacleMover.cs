@@ -10,7 +10,6 @@ public class ObstacleMover : MonoBehaviour
     public Vector3 InitialDirection = Vector3.back;
 
     public static GameObject player;
-    public static GameObject destroyEffect;
     public static int maxCollisionsToDestroy = 50;
 
     private Rigidbody rb;
@@ -37,7 +36,7 @@ public class ObstacleMover : MonoBehaviour
         Invoke(nameof(DestroyAfterTimer), 60f); // nettoyage après passage
     }
 
-    void StopAllMoves() => rb.linearVelocity = rb.angularVelocity = Vector3.zero;
+    public void StopAllMoves() => rb.linearVelocity = rb.angularVelocity = Vector3.zero;
 
     void DestroyAfterTimer()
     {
@@ -56,19 +55,8 @@ public class ObstacleMover : MonoBehaviour
         var name = collision.gameObject.name;
         collisionAmount[name] = collisionAmount.GetValueOrDefault(name, 0) + 1;
 
-        if (collisionAmount[name] >= maxCollisionsToDestroy)
-        {
-            if (collision.gameObject == player)
-                foreach (var obstacle in ObstacleSpawner.obstacles)
-                    obstacle?.StopAllMoves();
-            
-            if (destroyEffect != null)
-            {
-                Instantiate(destroyEffect, collision.gameObject.transform).transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-                // rb.AddExplosionForce(500f, collision.contacts[0].point, 20f, 10f, ForceMode.Impulse);
-                Destroy(collision.gameObject, .3f);
-            }
-        }
+        if (collisionAmount[name] >= maxCollisionsToDestroy && collision.gameObject.TryGetComponent(out Mortal mortalObject))
+            mortalObject.TakeDamage();
     }
 
     void OnDestroy() => ObstacleSpawner.obstacles.Remove(this);
